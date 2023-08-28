@@ -1,10 +1,44 @@
+/*
+Author: Wesley Anastasi
+Class: CSI 3344
+Due Date: September 1, 2023
+*/
+
+/*
+This program uses Karatsuba's algorithm to multiply two large numbers
+efficently. Since it is dealing with potentially very large numbers,
+it uses strings to store the numbers, and then converts them to integers
+when needed. This allows for numbers of any size to be multiplied, as
+long as they are not negative.
+
+equalize adds leading zeros so that the numbers will be the same in length
+
+add and subtract to exactly what they say
+
+multiply uses Karatsuba's algorithm to multiply the two numbers.
+
+*/
+
+
 #include <iostream>
 #include <cmath>
 #include <string>
 #include <fstream>
+#include <gmp.h>
 
 using namespace std;
 
+/**
+ * equalize
+ * 
+ * adds leading zeros to the shorter string
+ * 
+ * Parameters:
+ *   num1 - first number passed by reference
+ *   num2 - second number passed by reference
+ * 
+ * Return value: none
+ */
 void equalize(string &num1, string &num2)
 {
     //check that each num is the same length
@@ -24,12 +58,23 @@ void equalize(string &num1, string &num2)
     }
 }
 
+/**
+ * add
+ * 
+ * adds two (potentially) large numbers together
+ * 
+ * Parameters:
+ *   num1 - first number passed by reference
+ *   num2 - second number passed by reference
+ * 
+ * Return value: string containing the sum
+ */
 string add(string num1, string num2)
 {
     string result = "";
 
     int temp = 0;
-    bool carry;
+    bool carry = false;
 
     equalize(num1, num2);
 
@@ -66,16 +111,25 @@ string add(string num1, string num2)
     return result;
 }
 
+/**
+ * subtract
+ * 
+ * subtracts two (potentially) large numbers
+ * 
+ * Parameters:
+ *   num1 - first number passed by reference
+ *   num2 - second number passed by reference
+ * 
+ * Return value: string containing the difference
+ */
 string subtract(string num1, string num2)
 {
     string result = "";
 
     int temp = 0;
-    bool borrow;
+    bool borrow = false;
 
     equalize(num1, num2);
-
-    borrow = false;
 
     for (int i = num1.length()-1; i >= 0; i--)
     {
@@ -105,6 +159,18 @@ string subtract(string num1, string num2)
     return result;
 }
 
+/**
+ * multiply
+ * 
+ * multiplies two (potentially) large numbers
+ * using Karatsuba's algorithm
+ * 
+ * Parameters:
+ *   num1 - first number passed by reference
+ *   num2 - second number passed by reference
+ * 
+ * Return value: string containing the product
+ */
 string multiply(string num1, string num2)
 {
     string result;
@@ -158,11 +224,22 @@ string multiply(string num1, string num2)
     }
 
     result = add(add(a, sub), b);
-    cout << result << endl;
     return result;
 
 }
 
+/**
+ * main
+ * 
+ * gets input from the user or a file, or failing that,
+ * multiplies 42 * 42
+ * 
+ * Parameters:
+ *   argc - number of arguments passed
+ *   argv - array of arguments passed
+ * 
+ * Return value: integer representing success or failure
+ */
 int main(int argc, char* argv[])
 {
     //assumes each number is not negative
@@ -197,7 +274,7 @@ int main(int argc, char* argv[])
     else
     {
         cout << "No input, multiplying 42 * 42" << endl;
-        cout << multiply("100000000000","1000000000000") << endl;
+        cout << multiply("42","42") << endl;
     }
 
     return 0;

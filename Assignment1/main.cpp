@@ -21,10 +21,8 @@ multiply uses Karatsuba's algorithm to multiply the two numbers.
 
 
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <fstream>
-#include <gmp.h>
 
 using namespace std;
 

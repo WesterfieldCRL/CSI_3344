@@ -172,6 +172,29 @@ string subtract(string num1, string num2)
 string multiply(string num1, string num2)
 {
     string result;
+    bool isNegative;
+    if (num1[0] == '-' && num2[0] == '-')
+    {
+        isNegative = false;
+        num1 = num1.substr(1,num1.length());
+        num2 = num2.substr(1,num2.length());
+    }
+    else if (num1[0] == '-' || num2[0] == '-')
+    {
+        isNegative = true;
+        if (num1[0] == '-')
+        {
+            num1 = num1.substr(1,num1.length());
+        }
+        else
+        {
+            num2 = num2.substr(1,num2.length());
+        }
+    }
+    else
+    {
+        isNegative = false;
+    }
 
     //check if each num is 1 digit
     if (num1.length() == 1  && num2.length() == 1)
@@ -222,6 +245,10 @@ string multiply(string num1, string num2)
     }
 
     result = add(add(a, sub), b);
+    if (isNegative)
+    {
+        result = "-" + result;
+    }
     return result;
 
 }

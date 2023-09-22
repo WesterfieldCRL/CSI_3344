@@ -34,6 +34,7 @@ int partition(int arr[], int left, int right, int pivotIndex)
         while (arr[right] > arr[pivotIndex])
         {
             right--;
+            cout << "vibe check" << endl;
         }
         if (left < right)
         {
@@ -52,7 +53,6 @@ void quickSort(int arr[], int left, int right, PartitionType partitionType, long
         if (partitionType == PartitionType::FINAL)
         {
             int pivot = partition(arr, left, right, right);
-
             quickSort(arr, left, pivot - 1, partitionType, comparisons);
             quickSort(arr, pivot + 1, right, partitionType, comparisons);
         }
@@ -120,22 +120,7 @@ int main(int argc, char* argv[])
     ifstream input;
     input.open(argv[1]);
 
-    int arr1[10] = { 3, 8, 2, 5, 1, 4, 7, 6, 10, 9 };
-    int arr2[10] = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-
-    long long comparisons = 0;
-
-    quickSort(arr1, 0, 9, PartitionType::FIRST, comparisons);
-
-    cout << comparisons << endl;
-
-    comparisons = 0;
-
-    quickSort(arr2, 0, 9, PartitionType::FIRST, comparisons);
-
-    cout << comparisons << endl;
-
-    /*int n = 10000;
+    int n = 10000;
     int arr[n];
 
     for (int i = 0; i < n; i++)
@@ -145,9 +130,9 @@ int main(int argc, char* argv[])
 
     long long comparisons = 0;
 
-    quickSort(arr, 0, n - 1, PartitionType::RANDOM, comparisons);
+    quickSort(arr, 0, n - 1, PartitionType::FINAL, comparisons);
 
-    cout << comparisons << endl;*/
+    cout << comparisons << endl;
 
     return 0;
 }

@@ -1,0 +1,23 @@
+With first value as pivot:
+QuickSort10k = 163,310
+QuickSort10kR = 49,985,001
+QuickSort10kSemi2k = 326,944
+QuickSort10kSemi4k = 225,726
+
+With last value as pivot:
+QuickSort10k = 49,985,001
+QuickSort10kR = 49,985,001
+QuickSort10kSemi2k = 49,985,001
+QuickSort10kSemi4k = 49,985,001
+
+With random value as pivot:
+QuickSort10k = 144,209
+QuickSort10kR = 158,284
+QuickSort10kSemi2k = 141,111
+QuickSort10kSemi4k = 160,677
+
+With median of 3 as pivot:
+QuickSort10k = 157,198
+QuickSort10kR = 107,727
+QuickSort10kSemi2k = 144,941
+QuickSort10kSemi4k = 145,397

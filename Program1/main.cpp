@@ -1,10 +1,32 @@
+/*
+Author: Wesley Anastasi
+Class: CSI 3344
+Due Date: September 22, 2023
+*/
+
+/*
+This program implements a quicksort algorithm to sort an array of integers.
+It uses a partition function to sort the array, and then recursively calls
+itself to sort the two halves of the array. It also uses a counter to count
+the number of comparisons made during the sorting process.
+
+This program compares the number of comparisons made when using different
+pivot selection methods. The pivot selection methods are:
+    - final element
+    - first element
+    - random element
+    - median of three (first, middle, and last elements)
+
+*/
+
 #include <iostream>
 #include <random>
 #include <fstream>
 
 using namespace std;
 
-enum class PartitionType
+
+enum PartitionType
 {
     FINAL,
     FIRST,
@@ -12,6 +34,17 @@ enum class PartitionType
     MEDIAN
 };
 
+/**
+ * printArray
+ * 
+ * prints the array
+ * 
+ * Parameters:
+ *   arr - array to be printed
+ *   size - size of the array
+ * 
+ * Return value: none
+ */
 void printArray(int arr[], int size)
 {
     int i;
@@ -23,6 +56,19 @@ void printArray(int arr[], int size)
     cout << endl;
 }
 
+/**
+ * partition
+ * 
+ * partitions the array based on the pivot
+ * 
+ * Parameters:
+ *   arr - array to be partitioned
+ *   left - left index of the array
+ *   right - right index of the array
+ *   pivotIndex - index of the pivot
+ * 
+ * Return value: index of the pivot
+ */
 int partition(int arr[], int left, int right, int pivotIndex)
 {
     while (right > left)
@@ -34,7 +80,6 @@ int partition(int arr[], int left, int right, int pivotIndex)
         while (arr[right] > arr[pivotIndex])
         {
             right--;
-            cout << "vibe check" << endl;
         }
         if (left < right)
         {
@@ -45,6 +90,21 @@ int partition(int arr[], int left, int right, int pivotIndex)
     return right;
 }
 
+/**
+ * quickSort
+ * 
+ * sorts the array by recursively calling itself
+ * and partitioning the array
+ * 
+ * Parameters:
+ *   arr - array to be sorted
+ *   left - left index of the array
+ *   right - right index of the array
+ *   partitionType - type of partition to use
+ *   comparisons - number of comparisons made
+ * 
+ * Return value: none
+ */
 void quickSort(int arr[], int left, int right, PartitionType partitionType, long long &comparisons)
 {
     if (left < right)
@@ -114,6 +174,19 @@ void quickSort(int arr[], int left, int right, PartitionType partitionType, long
     }
 }
 
+/**
+ * main
+ * 
+ * runs quicksort on an array of integers
+ * gottten from a file via command line arguments
+ * and prints the number of comparisons made
+ * 
+ * Parameters:
+ *   argc - number of arguments
+ *   argv - array of arguments
+ * 
+ * Return value: 0
+ */
 int main(int argc, char* argv[])
 {
     srand(0);

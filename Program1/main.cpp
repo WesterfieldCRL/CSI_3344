@@ -1,5 +1,6 @@
 #include <iostream>
-//#include "quickSort.h"
+#include <random>
+#include <fstream>
 
 using namespace std;
 
@@ -22,106 +23,131 @@ void printArray(int arr[], int size)
     cout << endl;
 }
 
-int partition(int arr[], int left, int right, int pivot, int pivotIndex)
+int partition(int arr[], int left, int right, int pivotIndex)
 {
-    int i = left;
-
-    for (int j = left; j < right; j++)
+    while (right > left)
     {
-        if (arr[j] < arr[pivotIndex])
+        while (arr[left] <= arr[pivotIndex])
         {
-            swap(arr[i], arr[j]);
-            //printArray(arr, right + 1);
-            i++;
+            left++;
+        }
+        while (arr[right] > arr[pivotIndex])
+        {
+            right--;
+        }
+        if (left < right)
+        {
+            swap(arr[left], arr[right]);
         }
     }
-
-    swap(arr[i], arr[right]);
-    //printArray(arr, right + 1);
-
-    return i;
+    swap(arr[right], arr[pivotIndex]);
+    return right;
 }
 
-/*int partition(int data[], int small_index, int big_index, int pivot, int pivot_index)
-{
-    do
-    {
-        while (data[big_index] <= pivot)
-        {
-            big_index++;
-        }
-        while (data[small_index] > pivot)
-        {
-            small_index--;
-        }
-        if (big_index < small_index)
-        {
-            swap(data[big_index], data[small_index]);
-        }
-    } while (small_index > big_index);
-    swap(data[small_index], data[pivot_index]);
-    return pivot_index;
-}*/
-
-void swap(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-void quickSort(int arr[], int left, int right, PartitionType partitionType)
+void quickSort(int arr[], int left, int right, PartitionType partitionType, long long &comparisons)
 {
     if (left < right)
     {
+        comparisons += right - left - 1;
         if (partitionType == PartitionType::FINAL)
         {
-            int pivot = partition(arr, left, right, arr[right], right);
+            int pivot = partition(arr, left, right, right);
 
-            quickSort(arr, left, pivot - 1, partitionType);
-            quickSort(arr, pivot + 1, right, partitionType);
+            quickSort(arr, left, pivot - 1, partitionType, comparisons);
+            quickSort(arr, pivot + 1, right, partitionType, comparisons);
         }
         else if (partitionType == PartitionType::FIRST)
         {
-            int pivot = partition(arr, left, right, arr[left], left);
-            //printArray(arr, right + 1);
-            //cout << "Pivot index: " << pivot << endl;
-            quickSort(arr, left, pivot - 1, partitionType);
-            quickSort(arr, pivot + 1, right, partitionType);
+            int pivot = partition(arr, left, right, left);
+            quickSort(arr, left, pivot - 1, partitionType, comparisons);
+            quickSort(arr, pivot + 1, right, partitionType, comparisons);
+        }
+        else if (partitionType == PartitionType::RANDOM)
+        {
+            int pivot = partition(arr, left, right, rand() % (right - left + 1) + left);
+            quickSort(arr, left, pivot - 1, partitionType, comparisons);
+            quickSort(arr, pivot + 1, right, partitionType, comparisons);
+        }
+        else if (partitionType == PartitionType::MEDIAN)
+        {
+            int median;
+            if (arr[left] > arr[right])
+            {
+                if (arr[left] > arr[(left + right) / 2])
+                {
+                    if (arr[(left + right) / 2] > arr[right])
+                    {
+                        median = (left + right) / 2;
+                    }
+                    else
+                    {
+                        median = right;
+                    }
+                }
+                else
+                {
+                    median = left;
+                }
+            }
+            else
+            {
+                if (arr[right] > arr[(left + right) / 2])
+                {
+                    if (arr[(left + right) / 2] > arr[left])
+                    {
+                        median = (left + right) / 2;
+                    }
+                    else
+                    {
+                        median = left;
+                    }
+                }
+                else
+                {
+                    median = right;
+                }
+            }
+            int pivot = partition(arr, left, right, median);
+            quickSort(arr, left, pivot - 1, partitionType, comparisons);
+            quickSort(arr, pivot + 1, right, partitionType, comparisons);
         }
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    int arrFinal[] = { 10, 7, 8, 9, 1, 5 };
-    int arrFirst[] = { 10, 7, 8, 9, 1, 5 };
-    int arrRandom[] = { 10, 7, 8, 9, 1, 5 };
-    int arrMedian[] = { 10, 7, 8, 9, 1, 5 };
-    int n = sizeof(arrFinal) / sizeof(arrFinal[0]);
+    srand(0);
+    ifstream input;
+    input.open(argv[1]);
 
-    cout << "Unsorted array: " << endl;
-    printArray(arrFinal, n);
+    int arr1[10] = { 3, 8, 2, 5, 1, 4, 7, 6, 10, 9 };
+    int arr2[10] = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
 
-    cout << endl;
+    long long comparisons = 0;
 
-    cout << "sorting Final" << endl;
-    quickSort(arrFinal, 0, n - 1, PartitionType::FINAL);
-    cout << "sorting First" << endl;
-    quickSort(arrFirst, 0, n - 1, PartitionType::FIRST);
+    quickSort(arr1, 0, 9, PartitionType::FIRST, comparisons);
 
-    //quickSort(arrRandom, 0, n - 1, PartitionType::RANDOM);
-    //quickSort(arrMedian, 0, n - 1, PartitionType::MEDIAN);
+    cout << comparisons << endl;
 
-    cout << "Sorted array final: " << endl;
+    comparisons = 0;
 
-    printArray(arrFinal, n);
+    quickSort(arr2, 0, 9, PartitionType::FIRST, comparisons);
 
-    cout << endl;  
+    cout << comparisons << endl;
 
-    cout << "Sorted array first: " << endl;
+    /*int n = 10000;
+    int arr[n];
 
-    printArray(arrFirst, n);
+    for (int i = 0; i < n; i++)
+    {
+        input >> arr[i];
+    }
+
+    long long comparisons = 0;
+
+    quickSort(arr, 0, n - 1, PartitionType::RANDOM, comparisons);
+
+    cout << comparisons << endl;*/
 
     return 0;
 }

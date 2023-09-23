@@ -207,5 +207,7 @@ int main(int argc, char* argv[])
 
     cout << comparisons << endl;
 
+    input.close();
+
     return 0;
 }

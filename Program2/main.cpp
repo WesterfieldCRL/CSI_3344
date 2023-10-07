@@ -103,8 +103,11 @@ int main(int argc, char* argv[])
         }
     }
 
-    graph.printGraph(cout);
+    set<string> memberSet = graph.largestStronglyConnectedComponent();
 
+    int unintelligbleMembers = members.size()-memberSet.size();
+
+    cout << unintelligbleMembers << endl;
 
     return 0;
 }

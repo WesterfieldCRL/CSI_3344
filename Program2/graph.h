@@ -2,7 +2,7 @@
 #define GRAPH_H
 
 #include <iostream>
-#include <vector>
+#include <set>
 #include <map>
 #include <fstream>
 
@@ -24,48 +24,36 @@ public:
     void printGraph(ostream &out);
         // print the graph (for debugging purposes
 
-    bool isPath(T from, T to);
-        // return true if there is a path from vertex "from" to vertex "to"
-        // return false otherwise
-
 private:
-    map<T, std::vector<T>> adjacencyList;
+    map<T, std::set<T>> adjacencyList;
 };
 
 template<typename T>
 Graph<T>::Graph() {
-    adjacencyList = map<T, vector<T>>();
+    adjacencyList = map<T, set<T>>();
 }
 
 template<typename T>
 void Graph<T>::addVertex(T vertex) {
-    adjacencyList[vertex] = vector<T>();
+    adjacencyList[vertex] = set<T>();
 }
 
 template<typename T>
 void Graph<T>::addEdge(T from, T to) {
-    adjacencyList[from].push_back(to);
+    adjacencyList[from].insert(to);
 }
 
 template<typename T>
 void Graph<T>::printGraph(ostream &out) {
-    for (auto it = adjacencyList.begin(); it != adjacencyList.end(); it++) {
+    for (auto it = adjacencyList.begin(); it != adjacencyList.end(); it++)
+    {
         out << it->first << ": ";
-        for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++) {
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
+        {
             out << *it2 << " ";
         }
         out << endl;
     }
-}
-
-template<typename T>
-bool Graph<T>::isPath(T from, T to) {
-    for (int i = 0; i < adjacencyList[from].size(); i++)
-    {
-        if (adjacencyList[from][i] == to)
-            return true;
-    }
-    return false;
 }
 
 #endif

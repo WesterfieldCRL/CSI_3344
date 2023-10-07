@@ -92,18 +92,11 @@ int main(int argc, char* argv[])
                 {
                     continue;
                 }
-                else if (graph.isPath(members[i].name, members[k].name)) //check if k is already in the graph
-                {
-                    continue;
-                }
                 for (int l = 0; l < members[k].langUnderstood.size(); l++) // for each language understood by member[k]
                 {
                     if (members[i].langSpoken[j] == members[k].langUnderstood[l]) // if member[i] speaks a language that member[k] understands
                     {
-                        if (i != k)
-                        {
-                            graph.addEdge(members[i].name, members[k].name);
-                        }
+                        graph.addEdge(members[i].name, members[k].name);
                     }
                 }
             }

@@ -128,16 +128,15 @@ void Graph<T>::printGraph(ostream &out) {
 }
 
 /**
- * isPath
+ * getVertexSet
  *
  * This function reads in a list of members and the languages they speak and
  * understand from a file and returns a vector of members.
  * 
  * Parameters:
- *   from: the vertex to start from
- *   to: the vertex to end at
+ *   name: the name of the vertex to get the set of
  * 
- * Return value: true if there is a path from "from" to "to", false otherwise
+ * Return value: the set of vertices
  */
 
 template<typename T>
@@ -145,6 +144,18 @@ set<T> Graph<T>::getVertexSet(string name)
 {
     return adjacencyList[name];
 }
+
+/**
+ * bfs
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   start: the vertex to start the search at
+ * 
+ * Return value: the set of vertices visited
+ */
 
 template<typename T>
 set<T> Graph<T>::bfs(T start) {
@@ -166,6 +177,18 @@ set<T> Graph<T>::bfs(T start) {
     }
     return visited;
 }
+
+/**
+ * largestStronglyConnectedComponent
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: the set of vertices in the largest strongly connected component
+ */
 
 template<typename T>
 set<T> Graph<T>::largestStronglyConnectedComponent() {

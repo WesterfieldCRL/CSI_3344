@@ -1,3 +1,18 @@
+/* CSI 3334
+ * Programming Assignment 2
+ * Filename: main.cpp
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the driver for the this project. It reads in a list of
+ * members and the languages they speak and understand from standard input and
+ * uses a graph to determine the minimum number of members that need to be
+ * present at a meeting to ensure that all members can understand at least one
+ * other member. The program will print the minimum number of members that 
+ * need to be removed to ensure that all members can understand at least 
+ * one other member.
+ */
+
 #include "graph.h"
 #include <iostream>
 #include <vector>
@@ -16,6 +31,18 @@ struct Member
     string name;
 
 };
+
+/**
+ * getMembers
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   file: the file to read from
+ * 
+ * Return value: a vector of members
+ */
 
 vector<Member> getMembers(ifstream &file)
 {
@@ -46,6 +73,21 @@ vector<Member> getMembers(ifstream &file)
     }
     return members;
 }
+
+/**
+ * main
+ *
+ * This function is the driver for the program. It reads in a list of members
+ * and the languages they speak and understand from standard input and adds
+ * them to a graph. It then adds edges to the graph between members that speak
+ * a language that another member understands. It then prints the graph.
+ * 
+ * Parameters:
+ *   argc: the number of command line arguments
+ *   argv: the command line arguments
+ * 
+ * Return value: 0 (indicating a successful run)
+ */
 
 int main(int argc, char* argv[]) 
 {

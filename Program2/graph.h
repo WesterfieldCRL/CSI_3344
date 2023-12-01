@@ -1,3 +1,14 @@
+/* CSI 3334
+ * Programming Assignment 2
+ * Filename: graph.h
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the header for the graph class. The graph class is used
+ * to represent the relationships between members of a club. The graph class
+ * uses an adjacency list to represent the graph.
+ */
+
 #ifndef GRAPH_H
 #define GRAPH_H
 
@@ -38,10 +49,34 @@ private:
     int numVertices;
 };
 
+/**
+ * Graph
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template<typename T>
 Graph<T>::Graph() {
     adjacencyList = map<T, set<T>>();
 }
+
+/**
+ * addVertex
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   T: the vertex to add
+ * 
+ * Return value: none
+ */
 
 template<typename T>
 void Graph<T>::addVertex(T vertex) {
@@ -49,10 +84,35 @@ void Graph<T>::addVertex(T vertex) {
     numVertices++;
 }
 
+/**
+ * addEdge
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   from: the vertex to add the edge from
+ *   to: the vertex to add the edge to
+ * 
+ * Return value: none
+ */
+
 template<typename T>
 void Graph<T>::addEdge(T from, T to) {
     adjacencyList[from].insert(to);
 }
+
+/**
+ * printGraph
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   out: the output stream to print to
+ * 
+ * Return value: none
+ */
 
 template<typename T>
 void Graph<T>::printGraph(ostream &out) {
@@ -67,11 +127,35 @@ void Graph<T>::printGraph(ostream &out) {
     }
 }
 
+/**
+ * getVertexSet
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   name: the name of the vertex to get the set of
+ * 
+ * Return value: the set of vertices
+ */
+
 template<typename T>
 set<T> Graph<T>::getVertexSet(string name)
 {
     return adjacencyList[name];
 }
+
+/**
+ * bfs
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   start: the vertex to start the search at
+ * 
+ * Return value: the set of vertices visited
+ */
 
 template<typename T>
 set<T> Graph<T>::bfs(T start) {
@@ -93,6 +177,18 @@ set<T> Graph<T>::bfs(T start) {
     }
     return visited;
 }
+
+/**
+ * largestStronglyConnectedComponent
+ *
+ * This function reads in a list of members and the languages they speak and
+ * understand from a file and returns a vector of members.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: the set of vertices in the largest strongly connected component
+ */
 
 template<typename T>
 set<T> Graph<T>::largestStronglyConnectedComponent() {

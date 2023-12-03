@@ -32,6 +32,8 @@ Huffman tree to decode the data and write it to the output file.
 
 using namespace std;
 
+int magicNumber = 5;
+
 /**
  * Node
  * 
@@ -292,7 +294,7 @@ void huff(string source, string destination)
 
         if (outputFile.is_open()) {
 
-            outputFile.put(5); //Magic Number
+            outputFile.put(magicNumber);
 
             writeTree(minHeap.top(), outputFile);
 
@@ -334,7 +336,7 @@ void unhuff(string source, string destination)
     {
         char magicNumber;
         inputFile.get(magicNumber);
-        if (magicNumber != 5)
+        if (magicNumber != magicNumber)
         {
             cout << "Invalid file" << endl;
             return;

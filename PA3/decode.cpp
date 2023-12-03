@@ -87,7 +87,7 @@ void decodeFile(const std::string& inputFileName, const std::string& outputFileN
 
 int main() {
     // Decode the compressed file and create a text file
-    decodeFile("compressed_file.bin", "decompressed_file.txt");
+    decodeFile("compressed_file.bin", "decompressed_file.flac");
 
     // Perform further actions using the decompressed file as needed
 

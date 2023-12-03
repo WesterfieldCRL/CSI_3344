@@ -1,3 +1,26 @@
+/*
+Author: Wesley Anastasi
+Class: CSI 3344
+Due Date: December 3, 2023
+*/
+
+/*
+This program uses Huffman's algorithm to compress and decompress files. It
+takes in a file and outputs a compressed version of the file. It can also
+take in a compressed file and output the original file.
+
+huff takes in a file and outputs a compressed version of the file. It does
+this by first reading the file and counting the number of times each byte
+occurs. It then uses a priority queue to create a Huffman tree. It then
+uses the Huffman tree to generate Huffman codes for each byte. It then
+writes the Huffman tree to the output file, followed by the encoded data.
+
+unhuff takes in a compressed file and outputs the original file. It does
+this by first reading the Huffman tree from the file. It then uses the
+Huffman tree to decode the data and write it to the output file.
+
+*/
+
 #include <iostream>
 #include <fstream>
 #include <cstdint>
@@ -9,6 +32,11 @@
 
 using namespace std;
 
+/**
+ * Node
+ * 
+ * A node for a Huffman tree
+ */
 struct Node
 {
     int count;
@@ -19,12 +47,29 @@ struct Node
 
 };
 
+/**
+ * CompareNodes
+ * 
+ * A comparator for the priority queue
+ */
 struct CompareNodes {
     bool operator()(Node* left, Node* right) const {
         return left->count > right->count;
     }
 };
 
+/**
+ * generateHuffmanCodes
+ * 
+ * Generates Huffman codes for each byte in the file
+ * 
+ * Parameters:
+ *   root - the root of the Huffman tree
+ *   huffmanCodes - a map to store the Huffman codes
+ *   currentCode - the current Huffman code with a default value of ""
+ * 
+ * Return value: none
+ */
 void generateHuffmanCodes(Node* root, map<int, string>& huffmanCodes, string currentCode = "") {
     if (root == nullptr) {
         return;
@@ -39,6 +84,17 @@ void generateHuffmanCodes(Node* root, map<int, string>& huffmanCodes, string cur
     generateHuffmanCodes(root->right, huffmanCodes, currentCode + "1");
 }
 
+/**
+ * writeTree
+ * 
+ * Writes the Huffman tree to the output file
+ * 
+ * Parameters:
+ *   node - the current node
+ *   outputFile - the output file
+ * 
+ * Return value: none
+ */
 void writeTree(Node* node, ofstream& outputFile)
 {
     if (node == nullptr)
@@ -55,6 +111,18 @@ void writeTree(Node* node, ofstream& outputFile)
     }
 }
 
+/**
+ * writeData
+ * 
+ * Writes the encoded data to the output file
+ * 
+ * Parameters:
+ *   outputFile - the output file
+ *   inputFile - the input file
+ *   huffmanCodes - the Huffman codes
+ * 
+ * Return value: none
+ */
 void writeData(ofstream& outputFile, ifstream& inputFile, map<int, string>& huffmanCodes)
 {
 
@@ -80,6 +148,16 @@ void writeData(ofstream& outputFile, ifstream& inputFile, map<int, string>& huff
     }
 }
 
+/**
+ * readTree
+ * 
+ * Reads the Huffman tree from the input file
+ * 
+ * Parameters:
+ *   inputFile - the input file
+ * 
+ * Return value: the root of the Huffman tree
+ */
 Node* readTree(ifstream& inputFile)
 {
     char marker;
@@ -100,6 +178,16 @@ Node* readTree(ifstream& inputFile)
     }
 }
 
+/**
+ * printTree
+ * 
+ * Prints the Huffman tree
+ * 
+ * Parameters:
+ *   node - the current node
+ * 
+ * Return value: none
+ */
 void printTree(Node* node)
 {
     if (node == nullptr)
@@ -120,6 +208,16 @@ void printTree(Node* node)
     }
 }
 
+/**
+ * printCodes
+ * 
+ * Prints the Huffman codes
+ * 
+ * Parameters:
+ *   huffmanCodes - the Huffman codes
+ * 
+ * Return value: none
+ */
 void printCodes(map<int, string>& huffmanCodes)
 {
     for (auto it = huffmanCodes.begin(); it != huffmanCodes.end(); ++it)
@@ -128,6 +226,18 @@ void printCodes(map<int, string>& huffmanCodes)
     }
 }
 
+/**
+ * huff
+ * 
+ * Performs Huffman compression on a file and outputs the compressed file
+ * to the destination
+ * 
+ * Parameters:
+ *   source - the source file
+ *   destination - the destination file
+ * 
+ * Return value: none
+ */
 void huff(string source, string destination)
 {
     vector<int> chunkCounts;
@@ -203,6 +313,18 @@ void huff(string source, string destination)
     }
 }
 
+/**
+ * unhuff
+ * 
+ * Performs Huffman decompression on a file and outputs the decompressed file
+ * to the destination
+ * 
+ * Parameters:
+ *   source - the source file
+ *   destination - the destination file
+ * 
+ * Return value: none
+ */
 void unhuff(string source, string destination)
 {
     Node* root;
@@ -273,6 +395,18 @@ void unhuff(string source, string destination)
     }
 }
 
+/**
+ * main
+ * 
+ * Gets input from command line and calls huff or unhuff
+ * If arguments are invalid, prints usage
+ * 
+ * Parameters:
+ *   argc - number of arguments passed
+ *   argv - array of arguments passed
+ * 
+ * Return value: integer representing success or failure
+ */
 int main (int argc, char* argv[])
 {
     if (argc != 4)

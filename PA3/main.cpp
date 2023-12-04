@@ -140,10 +140,14 @@ void writeData(ofstream& outputFile, ifstream& inputFile, map<int, string>& huff
 
     outputFile.write(reinterpret_cast<char*>(&size), sizeof(size));
 
-    cout << size << endl;
+    //cout << size << endl;
 
     for (int i = 0; i < code.size(); i += 8)
     {
+        if (code.size() - i < 8)
+        {
+            code += string(8 - (code.size() - i), '0');
+        }
         bitset<8> bits(code.substr(i, 8));
         char encodedByte = static_cast<char>(bits.to_ulong());
         outputFile.put(encodedByte);
@@ -345,11 +349,6 @@ void unhuff(string source, string destination)
 
         //printTree(root);
 
-        map<int, string> huffmanCodes; 
-        generateHuffmanCodes(root, huffmanCodes);
-
-        //printCodes(huffmanCodes);
-
         ofstream outputFile(destination, ios::binary);
         
         if (outputFile.is_open())
@@ -357,7 +356,7 @@ void unhuff(string source, string destination)
             int size;
             inputFile.read(reinterpret_cast<char*>(&size), sizeof(size));
 
-            cout << size << endl;
+            //cout << size << endl;
 
             char byte;
             string encodedBits;
@@ -366,6 +365,8 @@ void unhuff(string source, string destination)
             }
 
             encodedBits = encodedBits.substr(0, size);
+
+            //cout << encodedBits << endl;
 
             Node* current = root;
             for (char bit : encodedBits) {

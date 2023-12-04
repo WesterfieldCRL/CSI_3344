@@ -283,6 +283,13 @@ void huff(string source, string destination)
             minHeap.push(mergedNode);
         }
 
+        if (minHeap.top()->left == nullptr && minHeap.top()->right == nullptr) {
+            Node* node = new Node(minHeap.top()->count, -1);
+            node->left = minHeap.top();
+            minHeap.pop();
+            minHeap.push(node);
+        }
+
         map<int, string> huffmanCodes;
         generateHuffmanCodes(minHeap.top(), huffmanCodes);
 
